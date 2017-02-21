@@ -7,14 +7,14 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "module": "commonjs",
-    "target": "es2015"
+    "target": "es2015",
+    "outDir": "built/local"
   },
   "formatCodeOptions": {
     "indentSize": 2,
     "tabSize": 2
   },
    "exclude": [
-     "typings/index.d.ts",
      "node_modules"
    ]
 }

@@ -11,7 +11,6 @@ const port = 8000
 for (var i in config.entry) {
     config.entry[i].unshift('webpack-dev-server/client?' + host + ':' + port, "webpack/hot/dev-server")
 }
-config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
 
 const compiler = webpack(config)

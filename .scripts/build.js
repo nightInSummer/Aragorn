@@ -17,6 +17,7 @@ const getEntry = (globPath, pathDir) => {
         extname = path.extname(entry);
         basename = path.basename(entry, extname);
         pathname = path.join(dirname, basename);
+        pathname = pathname.replace(/\\/g, '/');
         pathname = pathDir ? pathname.replace(new RegExp('^' + pathDir), '') : pathname;
         entries[pathname] = ['./' + entry];
     }
@@ -26,10 +27,7 @@ const getEntry = (globPath, pathDir) => {
 const host = 'http://localhost'
 const port = 8000
 // >>>> config
-
-//    `webpack-dev-server/client?${host}:${port.toString()}`,
-//    'webpack/hot/dev-server',
-const entries = getEntry('src/ts/page/**/*.ts', 'src/ts/page')
+const entries = getEntry('src/ts/page/**/index.ts', 'src/ts/page/')
 const chunks = Object.keys(entries)
 const config = {
   entry: entries,
@@ -38,6 +36,9 @@ const config = {
     publicPath: '/',
     filename: 'scripts/[name].js',
     chunkFilename: 'scripts/[id].chunk.js?[chunkhash]'
+  },
+  resolve: {
+    extensions: [".js", ".ts"]
   },
   module: {
     rules: [
@@ -93,7 +94,7 @@ const pages = Object.keys(getEntry('src/view/**/*.html', 'src/view/'));
 pages.forEach(function(pathname) {
     let conf = {
         filename: pathname + '.html',
-        template: pathname + '.html',
+        template: 'src/view/' + pathname + '.html',
         inject: false
     };
     if (pathname in config.entry) {

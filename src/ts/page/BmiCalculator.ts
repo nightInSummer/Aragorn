@@ -2,7 +2,7 @@ import xs, {Stream, MemoryStream} from 'xstream';
 import {h2, div, VNode} from '@cycle/dom';
 import {DOMSource} from '@cycle/dom/xstream-typings';
 import isolate from '@cycle/isolate';
-import LabeledSlider, {LabeledSliderProps} from './LabeledSlider.ts';
+import LabeledSlider, {LabeledSliderProps} from './LabeledSlider';
 
 export type Sources = {
   DOM: DOMSource,
@@ -19,7 +19,7 @@ function BmiCalculator(sources: Sources): Sinks {
     label: 'Weight', unit: 'kg', min: 40, initial: 70, max: 140
   }).remember();
   let heightProps$ = xs.of<LabeledSliderProps>({
-    label: 'Height', unit: 'cm', min: 140, initial: 170, max: 210
+    label: 'Height', unit: 'm', min: 140, initial: 170, max: 210
   }).remember();
 
   let weightSlider = WeightSlider({DOM: sources.DOM, props$: weightProps$});
@@ -38,7 +38,7 @@ function BmiCalculator(sources: Sources): Sinks {
         div([
           weightVTree,
           heightVTree,
-          h2('BMsss sssd Idssss i s ' + bmi)
+          h2('BMssssd  is ' + bmi)
         ])
       )
   };
