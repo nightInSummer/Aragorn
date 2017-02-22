@@ -20,6 +20,12 @@ compiler.plugin('done', () => {
 const server = new WebpackDevServer(compiler, {
   historyApiFallback: true,
   hot: true,
-  stats: 'errors-only'
+  stats: {
+      hash: true,
+      version: true,
+      timings: true,
+      assets: true,
+      chunks: false
+    }
 })
 server.listen(port)

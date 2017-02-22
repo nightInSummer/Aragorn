@@ -1,4 +1,3 @@
-"use strict"
 const webpack = require('webpack')
 const path = require('path')
 const glob = require('glob')
@@ -49,31 +48,38 @@ const config = {
         options: {
           presets: ['es2015']
         },
-        exclude: /node_modules/
+        include: path.join(__dirname, '../src/ts')
       }, {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader'})
+        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader'}),
+        include: path.join(__dirname, '../src/css')
       }, {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({ fallback: 'less-loader', use: 'css-loader'})
+        loader: ExtractTextPlugin.extract({ fallbackLoader: 'less-loader', loader: 'css-loader'}),
+        include: path.join(__dirname, '../src/css')
       }, {
         test: /\.html$/,
-        use: "html-loader?-minimize"
+        loader: "html-loader?-minimize",
+        include: path.join(__dirname, '../src/view')
       }, {
         test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'file-loader?name=fonts/[name].[ext]'
+        loader: 'file-loader?name=fonts/[name].[ext]',
+        include: path.join(__dirname, '../src/img')
       }, {
         test: /\.(png|jpe?g|gif)$/,
-        use: 'url-loader?limit=8192&name=imgs/[name]-[hash].[ext]'
+        loader: 'url-loader?limit=8192&name=imgs/[name]-[hash].[ext]',
+        include: path.join(__dirname, '../src/img')
       }
     ]
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      _: 'lodash'
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('../manifest.json'),
+      name: 'dll'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendors',
+        names: ['vendors', 'runtime'],
         chunks: chunks,
         minChunks: chunks.length
     }),
@@ -87,6 +93,14 @@ const config = {
         except: ['exports', 'require']
     }),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.SourceMapDevToolPlugin(
+      {
+        include: chunks.map(name => 'scripts/' + name + '.js'),
+        exclude: 'vendors',
+        columns: false,
+        module: false
+      }
+    ),
     new ProgressBarPlugin()
   ]
 }
@@ -101,7 +115,7 @@ pages.forEach(function(pathname) {
     if (pathname in config.entry) {
         conf.favicon = 'src/img/favicon.ico';
         conf.inject = 'body';
-        conf.chunks = ['vendors', pathname];
+        conf.chunks = ['vendors', 'runtime', pathname];
         conf.hash = true;
     }
     config.plugins.push(new HtmlWebpackPlugin(conf));

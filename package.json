@@ -24,7 +24,6 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
-    "html-loader": "^0.4.4",
     "@cycle/dom": "^14.3.0",
     "@cycle/isolate": "^1.4.0",
     "@cycle/xstream-run": "^4.2.0",
@@ -32,6 +31,7 @@
     "xstream": "^10.2.0"
   },
   "scripts": {
-    "start": "node .scripts/server.js"
+    "start": "node .scripts/server.js",
+    "dll": "webpack --progress --colors --config .scripts/dll.js"
   }
 }
