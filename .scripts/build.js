@@ -1,3 +1,4 @@
+"use strict"
 const webpack = require('webpack')
 const path = require('path')
 const glob = require('glob')
@@ -51,19 +52,19 @@ const config = {
         exclude: /node_modules/
       }, {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader'})
+        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader'})
       }, {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'css-loader', loader: 'less-loader'})
+        use: ExtractTextPlugin.extract({ fallback: 'less-loader', use: 'css-loader'})
       }, {
         test: /\.html$/,
-        loader: "html-loader?-minimize"
+        use: "html-loader?-minimize"
       }, {
         test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        use: 'file-loader?name=fonts/[name].[ext]'
       }, {
         test: /\.(png|jpe?g|gif)$/,
-        loader: 'url-loader?limit=8192&name=imgs/[name]-[hash].[ext]'
+        use: 'url-loader?limit=8192&name=imgs/[name]-[hash].[ext]'
       }
     ]
   },
