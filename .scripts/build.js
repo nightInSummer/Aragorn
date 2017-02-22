@@ -79,7 +79,7 @@ const config = {
       name: 'dll'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-        names: ['vendors', 'runtime'],
+        name: 'vendors',
         chunks: chunks,
         minChunks: chunks.length
     }),
@@ -115,7 +115,7 @@ pages.forEach(function(pathname) {
     if (pathname in config.entry) {
         conf.favicon = 'src/img/favicon.ico';
         conf.inject = 'body';
-        conf.chunks = ['vendors', 'runtime', pathname];
+        conf.chunks = ['vendors', pathname];
         conf.hash = true;
     }
     config.plugins.push(new HtmlWebpackPlugin(conf));
