@@ -7,7 +7,8 @@
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
     "module": "commonjs",
-    "target": "es2015"
+    "target": "es2015",
+    "outDir": "./built"
   },
   "formatCodeOptions": {
     "indentSize": 2,
