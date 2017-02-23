@@ -9,14 +9,15 @@ module.exports = {
   },
   entry: {
     dll: [
-      '@cycle/base',
       '@cycle/dom',
       '@cycle/isolate',
-      '@cycle/time',
-      '@cycle/xstream-run',
+      '@cycle/run',
+      '@cycle/rxjs-run',
       '@cycle/xstream-adapter',
+      '@cycle/base',
       'lodash',
-      'cycle-restart'
+      'xstream',
+      'rxjs'
     ]
   },
   plugins: [
