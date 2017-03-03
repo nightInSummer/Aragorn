@@ -13,10 +13,10 @@ module.exports = {
       '@cycle/isolate',
       '@cycle/run',
       '@cycle/rxjs-run',
-      '@cycle/xstream-adapter',
       '@cycle/base',
       'lodash',
       'xstream',
+      'immutable',
       'rxjs'
     ]
   },
@@ -32,7 +32,8 @@ module.exports = {
       context: __dirname
     }),
     new webpack.ProvidePlugin({
-      _: 'lodash'
+      _: 'lodash',
+      I: 'immutable'
     }),
     new ExtractTextPlugin('[name].css')
   ]

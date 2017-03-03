@@ -5,6 +5,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CheckerPlugin } = require('awesome-typescript-loader')
 const debug = process.env.NODE_ENV !== 'production'
 // >>>> utils
 const getEntry = (globPath, pathDir) => {
@@ -27,7 +28,7 @@ const getEntry = (globPath, pathDir) => {
 const host = 'http://localhost'
 const port = 8000
 // >>>> config
-const entries = getEntry('src/ts/page/**/index.ts', 'src/ts/page/')
+const entries = getEntry('src/ts/page/**/index.*', 'src/ts/page/')
 const chunks = Object.keys(entries)
 const config = {
   entry: entries,
@@ -38,24 +39,21 @@ const config = {
     chunkFilename: 'scripts/[id].chunk.js?[chunkhash]'
   },
   resolve: {
-    extensions: [".js", ".ts"]
+    extensions: [".js", ".ts", ".tsx"]
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        loader: 'ts-loader',
-        options: {
-          presets: ['es2015']
-        },
-        include: path.join(__dirname, '../src/ts')
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+        include: path.join(__dirname, '../src/ts')        
       }, {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader'}),
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader'}),
         include: path.join(__dirname, '../src/css')
       }, {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract({ fallbackLoader: 'less-loader', loader: 'css-loader'}),
+        loader: ExtractTextPlugin.extract({ fallback: 'less-loader', use: 'css-loader'}),
         include: path.join(__dirname, '../src/css')
       }, {
         test: /\.html$/,
@@ -73,6 +71,7 @@ const config = {
     ]
   },
   plugins: [
+    new CheckerPlugin(),
     new webpack.DllReferencePlugin({
       context: __dirname,
       manifest: require('../manifest.json'),

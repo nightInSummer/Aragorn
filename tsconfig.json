@@ -8,7 +8,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "module": "commonjs",
     "target": "es2015",
+    "jsx": "preserve",
     "outDir": "./built"
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "useBabel": true,
+    "useCache": true
   },
   "formatCodeOptions": {
     "indentSize": 2,
