@@ -49,12 +49,12 @@ const config = {
         include: path.join(__dirname, '../src/ts')        
       }, {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader'}),
-        include: path.join(__dirname, '../src/css')
+        loader: ExtractTextPlugin.extract([ 'style-loader', 'css-loader' ]),
+        include: path.join(__dirname, '../src')
       }, {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract({ fallback: 'less-loader', use: 'css-loader'}),
-        include: path.join(__dirname, '../src/css')
+        loader: ExtractTextPlugin.extract([ 'css-loader', 'less-loader' ]),
+        include: path.join(__dirname, '../src')
       }, {
         test: /\.html$/,
         loader: "html-loader?-minimize",
@@ -71,6 +71,9 @@ const config = {
     ]
   },
   plugins: [
+    new webpack.ProvidePlugin({
+      JSX: 'snabbdom-jsx'
+    }),
     new CheckerPlugin(),
     new webpack.DllReferencePlugin({
       context: __dirname,
