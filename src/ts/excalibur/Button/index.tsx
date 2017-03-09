@@ -1,8 +1,9 @@
 import { run } from '@cycle/run'
 import { makeDOMDriver, DOMSource } from '@cycle/dom'
 import isolate from '@cycle/isolate'
+import { VNode } from 'snabbdom/vnode'
 
-import { DOMComponent, Sources } from '../types'
+import { DOMComponent, Sources, Props } from '../types'
 import xs, { Stream } from 'xstream'
 import debounce from 'xstream/extra/debounce'
 import {Map} from 'immutable'
@@ -11,9 +12,6 @@ import './styles.less'
 interface Sinks {
   DOM: Stream<JSX.Element>,
   ACTIONS: Actions
-}
-interface Props {
-  [x: string]: any
 }
 interface Actions {
   mousedown$: Stream<Symbol>,
@@ -31,11 +29,11 @@ const mouseenter = Symbol('Button.mouseenter')
 
 
 const intent = (dom: DOMSource) : Actions => ({
-  mousedown$: dom.select('.button').events('mousedown').mapTo(mousedown),
-  mousemove$: dom.select('.button').events('mousemove'),
-  mouseleave$: dom.select('.button').events('mouseleave').mapTo(mouseleave),
-  mouseup$: dom.select('.button').events('mouseup').mapTo(mouseup),
-  mouseenter$: dom.select('.button').events('mouseenter').mapTo(mouseenter),
+  mousedown$: dom.select('.excaliur-button').events('mousedown').mapTo(mousedown),
+  mousemove$: dom.select('.excaliur-button').events('mousemove'),
+  mouseleave$: dom.select('.excaliur-button').events('mouseleave').mapTo(mouseleave),
+  mouseup$: dom.select('.excaliur-button').events('mouseup').mapTo(mouseup),
+  mouseenter$: dom.select('.excaliur-button').events('mouseenter').mapTo(mouseenter),
 })
 
 const reducers = (actions: Actions) => {
@@ -94,7 +92,7 @@ const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>
 }
 
 const view = (state$: Stream<Map<string, any>>) => state$.map(
-  (state: Map<string, any>) => <a className="button" style={state.get('style').toJS()} title={state.get('text')} />
+  (state: Map<string, any>) => <a className="excaliur-button" style={state.get('style').toJS()} title={state.get('text')} ><i className={`iconfont excaliur-icon-button icon-${state.get('icon')}`} /></a>
 )
 
 const main: DOMComponent = (sources: Sources ) : Sinks => {

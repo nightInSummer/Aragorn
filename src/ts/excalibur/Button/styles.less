@@ -1,4 +1,4 @@
-.button {
+.excaliur-button {
 	position: relative;
 	display: inline-block;
 	padding: 1.2em 2em;
@@ -30,7 +30,7 @@
 	&:hover::before {
 		box-shadow: 0 5px 15px rgba(0, 0, 0, .3);
 	}
-	
+
 	&::after {
 		position: relative;
 		display: inline-block;
@@ -38,11 +38,26 @@
 		transition: transform .2s ease; 
 		font-weight: bold;
 		letter-spacing: .01em;
+		line-height: 25px;
 		will-change: transform;
 		transform:
 			translateY(var(--ty, 0))
 			rotateX(var(--rx, 0))
 			rotateY(var(--ry, 0));
 	}
+}
+
+.excaliur-icon-button {
+		position: relative;
+		display: inline-block;
+		transition: transform .2s ease; 
+		font-weight: bold;
+		letter-spacing: 0.6em;
+		font-size: 1.5em;
+		will-change: transform;
+		transform:
+			translateY(var(--ty, 0))
+			rotateX(var(--rx, 0))
+			rotateY(var(--ry, 0));
 }
 

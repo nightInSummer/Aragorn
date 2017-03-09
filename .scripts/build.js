@@ -100,7 +100,7 @@ const config = {
         include: chunks.map(name => 'scripts/' + name + '.js'),
         exclude: 'vendors',
         columns: false,
-        module: false
+        module: true
       }
     ),
     new ProgressBarPlugin()

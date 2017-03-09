@@ -3,15 +3,16 @@ import tween from 'xstream/extra/tween';
 import concat from 'xstream/extra/concat';
 import {run} from '@cycle/run';
 import {makeDOMDriver} from '@cycle/dom';
-
 import Button from '../excalibur/Button'
+import Loading from '../excalibur/Loading'
 
 function main(sources: any) {
   const props = xs.of({
-    text: 'nimabissssssssssssssssssssss'
+    text: `谢天`,
+    icon: 'nationalattraction'
   })
   return {
-    DOM: Button({DOM: sources.DOM, props: props}).DOM
+    DOM: Loading({DOM: sources.DOM, props: props}).DOM
   };
 }
 

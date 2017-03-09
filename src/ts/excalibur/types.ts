@@ -1,5 +1,6 @@
 import { DOMSource } from '@cycle/dom'
 import { Stream } from 'xstream'
+import { VNode } from 'snabbdom/vnode'
 
 export interface DOMComponent {
   (
@@ -8,7 +9,7 @@ export interface DOMComponent {
       [x: string]: any
     }
   ): {
-    DOM: Stream<JSX.Element | JSX.Element[]>,
+    DOM: Stream<JSX.Element | JSX.Element[] | VNode>,
     [x: string]: any
   }
 }
@@ -16,4 +17,8 @@ export interface DOMComponent {
 export interface Sources {
   DOM: DOMSource,
   props: Stream<Object>
+}
+
+export interface Props {
+  [x: string]: any
 }

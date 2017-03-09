@@ -49,3 +49,10 @@ build
 
 # cache
 .awcache
+
+#vscode
+.vscode
+
+#yarn
+yarn-error.log
+yarn.lock
