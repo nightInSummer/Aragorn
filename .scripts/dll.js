@@ -17,15 +17,16 @@ module.exports = {
       'lodash',
       'xstream',
       'immutable',
-      'rxjs'
+      'rxjs',
+      path.join(__dirname, '../src/static/sprint.min.js')
     ]
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-          warnings: false
-      }
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //       warnings: false
+    //   }
+    // }),
     new webpack.DllPlugin({
       path: 'manifest.json',
       name: '[name]',

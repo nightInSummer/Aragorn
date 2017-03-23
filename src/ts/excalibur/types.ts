@@ -16,7 +16,7 @@ export interface DOMComponent {
 
 export interface Sources {
   DOM: DOMSource,
-  props: Stream<Object>
+  props: Stream<Object | Map<string, any>>
 }
 
 export interface Props {
