@@ -44,7 +44,7 @@ const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>
   const state$ = props
     .map(
       (props : Props) =>
-        fromJS({...props, open: false})
+        props.set('open', false)
     )
     .map(state => reducer$.fold((acc, reducer) => reducer(acc), state))
     .flatten()
@@ -58,12 +58,12 @@ const view = (state$: Stream<Map<string, any>>) => state$.map(
         <span className={`excalibur-select-arrow icon-more iconfont ${state.get('open') ? 'excalibur-select-on' : ''}`} style={{background: state.getIn(['style', 'background']), color: state.getIn(['style', 'color'])}}>
         </span>
         <span className="excalibur-select-title" style={{background: state.getIn(['style', 'background']), color: state.getIn(['style', 'color']), width: state.getIn(['style', 'width'])}}>
-          {state.getIn(['value', 'text']) || ''}
+          {`${state.get('label')} ${state.getIn(['value', 'text']) || ''}`}
         </span>
         <span className="excalibur-select-search" style={{background: state.getIn(['style', 'background']), color: state.getIn(['style', 'color']), width: state.getIn(['style', 'width']), zIndex: state.get('open') ? 2 : -2}}>
           <input className="input" style={{color: '#FFF'}} value={state.get('search')} placeholder='Search'/>
         </span>
-        <ul>
+        <ul style={{zIndex: 3}}>
           {state.get('data').map((x: Map<string, string>) => <li title={x.get('value')} className={`option ${state.get('multiple') ? state.getIn(['value', 'value']).includes(x.get('value')) : state.getIn(['value', 'value']) === x.get('value') ? 'selected' : ''} ${x.get('text').includes(state.get('search')) ? 'excalibur-animate-fadein' : 'excalibur-animate-fadeout'}`}>{x.get('text')}</li>).toJS()}
         </ul>
       </li>

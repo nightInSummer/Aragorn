@@ -1,0 +1,47 @@
+body, html {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.aragorn-topname {
+    font-family: Gza;
+    top: 5%;
+    z-index: 200;
+    overflow: hidden;
+    visibility: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    line-height: 23px;
+    margin-left: -20px;
+    margin-top: -12.5px;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-topname, .aragorn-midname {
+    position: absolute;
+    left: 50%;
+    text-align: center;
+}
+
+.aragorn-topname #aragorn-topname {
+    color: #fff;
+    cursor: pointer;
+    opacity: .5;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+    width: 50px;
+    height: 25px;
+}
+
+.aragorn-main-section {
+    height: calc(100% - 60px);
+    padding-top: 60px;
+}

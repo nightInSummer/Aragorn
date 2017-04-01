@@ -1,86 +1,69 @@
-.excalibur-input {
-  width: 400px;
-  margin: 0 auto;
-  perspective: 1000px;
-  font: normal 18px Sniglet;
-  color: white;
-  text-align: center;
-  * {
-    padding: 0;
-    margin: 0;
-  }
+.excalibur-simple-input {
+    outline: none;
+    z-index: 1;
+    position: relative;
+    background: none;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    color: #fff;
+    font-size: 21px;
+    font-weight: 400;
+    &:focus {
+      ~ label{
+        color: #fff;
+        transform: translate(-12%, -50%) scale(0.75);
+      }
+      ~ .excalibur-simple-input-bar {
+        &:before,
+        &:after {
+          width: 50%;
+        }
+      }
+    }
+    &:valid {
+      ~ label{
+        color: #fff;
+        transform: translate(-12%, -50%) scale(0.75);
+      }
+    }
 }
 
-.excalibur-input form {
-  transform: translateZ(-20px);
-  transform-style: preserve-3d;
-  height: 40px;
-  transition: all 0.35s;
+.excalibur-simple-input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #757575;
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 60px;
+    -webkit-transition: 0.2s ease;
+    transition: 0.2s ease;
 }
 
-.excalibur-input-text {
-  line-height: 40px;
-  height: 40px;
-  background: hsl(120, 40%, 20%);
+.excalibur-simple-input-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: #757575;
+    width: 100%;
+    height: 1px;
 }
 
-.excalibur-input-loader {
-  background: hsl(120, 40%, 30%);
-  animation: phase 1s infinite;
+.excalibur-simple-input-bar:before, .excalibur-simple-input-bar:after {
+    content: '';
+    position: absolute;
+    background: #ed2553;
+    width: 0;
+    height: 2px;
+    -webkit-transition: .2s ease;
+    transition: .2s ease;
 }
 
-@keyframes phase {
-	50% {background: hsl(120, 70%, 30%);}
+.excalibur-simple-input-bar:before {
+    left: 50%;
 }
 
-.excalibur-input-input {
-  background: white;
-  outline: none;
-	font: inherit;
-  text-align: left;
-  color: hsl(120, 40%, 30%);
-	display: block;
-  width: 100%;
-  padding: 0 10px;
-	box-sizing: border-box;
+.excalibur-simple-input-bar:after {
+    right: 50%;
 }
-
-.excalibur-input-button {
-  display: none;
-}
-
-.excalibur-input-button-icon, .excalibur-input-reset-icon {
-  position: absolute;
-  top: 0;
-  right: 0;
-	color: rgba(0, 0, 0, 0.25);
-	line-height: 40px; padding: 0 10px;
-	transition: all 0.5s;
-	cursor: pointer;
-}
-
-.excalibur-input-button-icon.active {
-  color: hsl(120, 40%, 30%);
-}
-
-.excalibur-input-reset-icon {
-  color: rgba(255, 255, 255, 0.25);
-  font-size: 14px;
-}
-
-.excalibur-input div {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-.excalibur-input div:nth-child(1) {transform: rotateX(0deg) translateZ(20px);}
-.excalibur-input div:nth-child(2) {transform: rotateX(-90deg) translateZ(20px);}
-.excalibur-input div:nth-child(3) {transform: rotateX(-180deg) translateZ(20px);}
-.excalibur-input div:nth-child(4) {transform: rotateX(-270deg) translateZ(20px);}
-
-.excalibur-input form:hover, 
-.excalibur-input form.ready {transform: translateZ(-20px) rotateX(90deg);}
-.excalibur-input form.loading {transform: translateZ(-20px) rotateX(180deg);}
-.excalibur-input form.complete {transform: translateZ(-20px) rotateX(270deg);}

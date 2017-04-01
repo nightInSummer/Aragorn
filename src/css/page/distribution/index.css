@@ -1,0 +1,229 @@
+@import "../../common/common.css";
+@import "../../common/animate.css";
+@import "../../lib/iconfont.css";
+
+.aragorn-menu-button {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 5%;
+    z-index: 200;
+    margin-top: -20px;
+    left: 2%;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-menu-button:hover {
+    cursor: pointer;
+}
+
+.aragorn-menu-button .icon {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    position: absolute;
+    height: 2px;
+    width: 30px;
+    top: 18px;
+    background-color: white;
+    opacity: .5;
+}
+
+.aragorn-menu-button.open .icon {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+}
+
+.aragorn-menu-button .icon:before {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    content: "";
+    top: -10px;
+}
+
+.aragorn-menu-button.open .icon:before {
+    -webkit-transform: rotateZ(-45deg) scaleX(0.75) translate(-10px, -3px);
+    transform: rotateZ(-45deg) scaleX(0.75) translate(-10px, -3px);
+}
+
+.aragorn-menu-button .icon:after {
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background-color: white;
+    content: "";
+    top: 10px;
+}
+
+.aragorn-menu-button.open .icon:after {
+    -webkit-transform: rotateZ(45deg) scaleX(0.75) translate(-10px, 3px);
+    transform: rotateZ(45deg) scaleX(0.75) translate(-10px, 3px);
+}
+
+.aragorn-search-button {
+  position: absolute;
+  z-index: 200;
+  right: 0;
+  top: 4%;
+  width: 50px;
+  height: 50px;
+  animation-duration: 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.aragorn-search-button .input {
+  box-sizing: border-box;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #FFFFFF;
+  border-radius: 50%;
+  background: none;
+  opacity: .8;
+  color: #fff;
+  outline: 0;
+  -webkit-transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out, padding 0.2s;
+  transition: width 0.4s ease-in-out, border-radius 0.8s ease-in-out, padding 0.2s;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+
+.aragorn-search-button .search {
+  background: none;
+  position: absolute;
+  top: 0px;
+  left: 5px;
+  height: 35px;
+  width: 35px;
+  opacity: .5;
+  padding: 0;
+  border-radius: 100%;
+  outline: 0;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+
+.aragorn-search-button .search:before {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 2px;
+  background-color: #fff;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  margin-top: 18px;
+  margin-left: 5px;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+.aragorn-search-button .close {
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+
+.aragorn-search-button .close:before {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  margin-top: -1px;
+  margin-left: -13px;
+  background-color: #fff;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+.aragorn-search-button .close:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 3px;
+  background-color: #fff;
+  margin-top: -1px;
+  margin-left: -13px;
+  cursor: pointer;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.aragorn-search-button .square {
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #FFFFFF;
+  border-radius: 0;
+  background: none;
+  color: #fff;
+  opacity: .5;
+  outline: 0;
+  -webkit-transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out, padding 0.2s;
+  transition: width 0.4s ease-in-out, border-radius 0.4s ease-in-out, padding 0.2s;
+  -webkit-transition-delay: 0.4s, 0s, 0.4s;
+  transition-delay: 0.4s, 0s, 0.4s;
+  -webkit-transform: translate(-100%, -50%);
+  -ms-transform: translate(-100%, -50%);
+  transform: translate(-100%, -50%);
+}
+
+.aragorn-toolbar-wrapper {
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,.8);
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+.aragorn-toolbar {
+  margin-top: 5%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 21;
+}
+
+.aragorn-background {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.aragorn-main-section {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  animation-duration: 3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}

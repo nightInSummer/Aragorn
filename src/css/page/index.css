@@ -1,11 +1,181 @@
-@import "../lib/iconfont.css";
+@import "../common/animate.css";
+@import "../common/common.css";
 
-body {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100vh;
-	transform-style: preserve-3d;
-	transform: perspective(800px);
+* {
+    margin: 0;
+    padding: 0;
+    border-collapse: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
+h3 {
+    letter-spacing: 1.5px;
+    font-size: 11px;
+}
+
+h3, p {
+    font-family: Relative;
+    text-rendering: geometricPrecision;
+}
+
+.overflow, body, html {
+    overflow: hidden;
+}
+
+.aragorn-midname {
+    top: 50%;
+    color: #fff;
+    text-rendering: geometricPrecision;
+    user-select: none;
+    cursor: default;
+    white-space: nowrap;
+    width: 130px;
+    height: 70px;
+    margin-top: -40px;
+    margin-left: -65px;
+}
+
+.aragorn-midname #title {
+    font-family: Gza;
+    line-height: 68px;
+    font-size: 55px;
+    letter-spacing: 0;
+    animation-duration: 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-midname #subtitle {
+    font-family: Relative;
+    letter-spacing: 2px;
+    font-size: 12px;
+    text-transform: uppercase;
+    visibility: hidden;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-bottomarrow {
+	width: 12px;
+	position: absolute;
+	opacity: .5;
+    bottom: 5%;
+    margin-left: -6px;
+    left: 50%;
+    visibility: hidden;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-bottomarrow:before,
+.aragorn-bottomarrow:after {
+    content: '';
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.aragorn-bottomarrow:before {
+    width: 12px;
+    height: 12px;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    animation: dot 3s infinite ease-in-out;
+}
+.aragorn-bottomarrow:after {
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    transform: rotate(45deg);
+    animation: arrow 3s infinite ease-in-out;
+    animation-delay: .75s;
+    opacity: .25;
+}
+.aragorn-bottomarrow > div {
+    display: block;
+}
+.aragorn-bottomarrow > div:before,
+.aragorn-bottomarrow > div:after {
+    content: '';
+    display: block;
+    margin: 5px auto;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    animation: dot 3s infinite ease-in-out;
+}
+.aragorn-bottomarrow > div:before {
+    width: 8px;
+    height: 8px;
+    animation-delay: .25s;
+}
+.aragorn-bottomarrow > div:after {
+    width: 6px;
+    height: 6px;
+    animation-delay: .5s;
+}
+
+.aragorn-nav {
+    z-index: 200;
+    user-select: none;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+.aragorn-nav-left {
+  left: 40px;
+}
+
+.aragorn-nav-transform {
+  z-index: 200;
+  position: absolute;
+  -webkit-transform: rotateZ(-90deg) translateX(-50%);
+  transform: rotateZ(-90deg) translateX(-50%);
+  -webkit-transform-origin: 0 50%;
+  -ms-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  top: 50%;
+}
+
+.aragorn-nav-left-wrapper, .aragorn-nav-right-wrapper {
+    display: inline-block;
+    padding: 10px;
+}
+
+.aragorn-nav-left-menu, .aragorn-nav-right-search {
+    color: #fff;
+    opacity: .5;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+}
+
+.aragorn-nav-right {
+    right: 40px;
+}
+
+.aragorn-nav-transform-right {
+    z-index: 100;
+    position: absolute;
+    -webkit-transform: rotateZ(-90deg) translateX(50%);
+    transform: rotateZ(-90deg) translateX(50%);
+    -webkit-transform-origin: 100% 50%;
+    -ms-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+    top: 50%;
+}
+
+.aragorn-background, .aragorn-background-output{
+    height: 100%;
+    width: 100%;
+}
+
+.aragorn-background-controls {
+  -webkit-font-smoothing: subpixel-antialiased;
+  position: absolute;
+  right: 20px;
+  top: 0;
+}

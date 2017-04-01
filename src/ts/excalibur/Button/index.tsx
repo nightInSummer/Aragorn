@@ -76,15 +76,12 @@ const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>
   const state$ = props
     .map(
           (props : Props) =>
-            Map({
-            ...props,
-            style: Map({
+            props.set('style', Map({
                     '--ty': '0px',
                     '--tz': '-12px',
                     '--rx': '0px',
                     '--ry': '0px'
-                  })
-          })
+                  }))
     )
     .map(state => reducer$.fold((acc, reducer) => reducer(acc), state))
     .flatten()

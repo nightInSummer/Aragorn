@@ -17,8 +17,7 @@ module.exports = {
       'lodash',
       'xstream',
       'immutable',
-      'rxjs',
-      path.join(__dirname, '../src/static/sprint.min.js')
+      'rxjs'
     ]
   },
   plugins: [
