@@ -1,6 +1,7 @@
 import { DOMSource } from '@cycle/dom'
 import { Stream } from 'xstream'
 import { VNode } from 'snabbdom/vnode'
+import { HTTPSource } from '@cycle/http'
 
 export interface DOMComponent {
   (
@@ -16,7 +17,8 @@ export interface DOMComponent {
 
 export interface Sources {
   DOM: DOMSource,
-  props: Stream<Object | Map<string, any>>
+  props?: Stream<Object | Map<string, any>>,
+  HTTP?: HTTPSource
 }
 
 export interface Props {

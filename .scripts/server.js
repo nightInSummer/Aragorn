@@ -5,8 +5,11 @@ var config = require('./build');
 
 const host = 'http://localhost'
 const port = 8000
+const target = process.argv[3]
 
-
+const hostMap = {
+  xuncheng: 'http://gzns-waimai-dcloud30.gzns.iwm.name:8155'
+}
 
 for (var i in config.entry) {
     config.entry[i].unshift('webpack-dev-server/client?' + host + ':' + port, "webpack/hot/dev-server")
@@ -25,7 +28,15 @@ const server = new WebpackDevServer(compiler, {
       version: true,
       timings: true,
       assets: true,
+      color: true,
       chunks: false
-    }
+  },
+  proxy: {
+      '/wlmine/*': {
+        target: hostMap[target] || 'http://gzns-waimai-dcloud30.gzns.iwm.name:8155',
+        changeOrigin: true,
+        secure: false
+      }
+  }
 })
 server.listen(port)

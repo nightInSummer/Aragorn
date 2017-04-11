@@ -83,6 +83,8 @@ const config = {
     new webpack.optimize.CommonsChunkPlugin({
         name: 'vendors',
         chunks: chunks,
+        async: true,
+        children: true,
         minChunks: chunks.length
     }),
     new ExtractTextPlugin('styles/[name].css'),

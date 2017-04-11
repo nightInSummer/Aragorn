@@ -1,0 +1,130 @@
+.excalibur-menu-wrapper {
+  width: 225px;
+  max-height: calc(90% - 10px);
+  overflow: auto;
+  border-radius: 4px;
+  background: #2a394f;
+      label {
+        padding:25px;
+        float:left;
+        height:72px;
+        border-bottom: 1px solid #293649;
+        position:relative;
+        width:100%;
+        color:rgb(239, 244, 250);
+        transition:text-indent .15s, height .3s;
+        box-sizing:border-box;
+        i {
+          margin-right:10px;
+          position:relative;
+          top: 2px;
+          width:16px;
+        }
+        span {
+          position :relative;
+          top:-3px
+        }
+        &:hover{
+          background: rgb(33, 46, 65);
+          border-bottom: 1px solid #2A394F;
+          text-indent:4px;
+        }
+        &:hover .excalibur-menu-bar{
+          width:100%;
+        }
+        .excalibur-menu-bar{
+          width: 0px;
+          transition:width .15s;
+          height: 2px;
+          position: absolute;
+          display: block;
+          background: rgb(53, 87, 137);
+          bottom: 0;
+          left: 0;
+        }
+        .excalibur-menu-arrow{
+          width:5px;
+          height:5px;
+          -webkit-transition: transform 0.8s;
+          transition: transform 0.8s;
+          transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+          border-top:2px solid white;
+          border-right:2px solid white;
+          float:right;
+          position:relative;
+          top: 6px;
+          right: 2px;
+          transform:rotate(45deg)
+        }
+      }
+      .excalibur-menu-content {
+        position: absolute;
+        display: none;
+        overflow: hidden;
+        left: 0;
+        width: 100%;
+        li{
+          width:100%;
+          opacity:0;
+          left:-100%;
+          background: #15a4fa;
+          padding:25px 0px;
+          text-indent:25px;
+          box-shadow: 0px 0px #126CA1  inset;
+          transition:box-shadow .3s,text-indent .3s;
+          position:relative;
+          &:hover{
+            background:#0c93e4;
+            box-shadow: 3px 0px #126CA1  inset;
+            transition:box-shadow .3s linear,text-indent .3s linear;
+            text-indent:31px;
+
+          }
+        }
+        .clear{
+          clear:both;
+        }
+      }
+}
+
+input[type='radio']:checked + label .excalibur-menu-content{
+  display: block;
+  top: 68px;
+  border-bottom: 1px solid rgb(33, 46, 65);
+}
+input[type="radio"]:checked + label > .excalibur-menu-arrow {
+  -webkit-transition: -webkit-transform 0.8s;
+  transition: transform 0.8s;
+  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+  border-top: 2px solid rgb(20, 163, 249);
+  border-right: 2px solid rgb(20, 163, 249);
+}
+input[type='radio']:checked + label {
+  height: 325px;background: #212e41;
+  text-indent:4px;
+  transition-property:height;
+  transition-duration:.6s; transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+input[type='radio']:checked + label .excalibur-menu-bar {
+  width:0;
+}
+.li-loop(@n, @i:1) when (@i <= @n) {
+  li:nth-of-type(@{i}) {
+      animation:in .15s .45s + @i/8 forwards;
+      transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      -moz-animation:in .15s .45s + @i/8 forwards;
+      -moz-transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+  .li-loop(@n, (@i + 1))
+}
+input[type='radio']:checked + label {
+  .li-loop(10, 1)
+}
+
+@keyframes in{
+  from{left:-100%;opacity:0}
+  to{left:0;opacity:1}
+}

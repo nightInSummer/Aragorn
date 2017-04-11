@@ -38,7 +38,7 @@ const view = (state$: Stream<Map<string, any>>) => state$.map(
       {typeof state.get('header') !== 'undefined' ? <div className="excalibur-table-header">{state.get('header')}</div> : ''}
       <table cellSpacing="0">
         <tbody>
-          <tr>{state.get('columns').map((item : Map<string, any>) => <th width={item.get('width') || 200}>{item.get('text')}</th>).toJS()}</tr>
+          <tr>{state.get('columns').map((item : Map<string, any>) => <th width={item.get('width') || 200}>{Map.isMap(item.get('text')) ? item.get('text').toJS() : item.get('text')}</th>).toJS()}</tr>
           {state.get('data').map((item: Map<string, any>) => <tr>{state.get('columns').map((col : Map<string, any>) => item.get(col.get('key')) ? <td title={col.get('text') + ' :'}>{item.get(col.get('key'))}</td> : <td style={{height: 0, padding: 0}}/>).toJS()}</tr>).toJS()}
         </tbody>
       </table>

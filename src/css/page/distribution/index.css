@@ -1,3 +1,4 @@
+@import '../../../../../node_modules/bulma/css/bulma.css';
 @import "../../common/common.css";
 @import "../../common/animate.css";
 @import "../../lib/iconfont.css";
@@ -191,7 +192,7 @@
   transform: translate(-100%, -50%);
 }
 
-.aragorn-toolbar-wrapper {
+.aragorn-toolbar-wrapper, .aragorn-menu-wrapper{
   z-index: 100;
   top: 0;
   left: 0;
@@ -226,4 +227,9 @@
   animation-duration: 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
+}
+
+.aragorn-topname.flipOutX, .aragorn-topname.flipOutY {
+  animation-fill-mode: backwards;
+  animation-duration: 1s;
 }

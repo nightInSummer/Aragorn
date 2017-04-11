@@ -1,3 +1,6 @@
+html {
+    overflow-y: hidden;
+}
 body, html {
     position: relative;
     width: 100%;
@@ -12,7 +15,6 @@ body, html {
     top: 5%;
     z-index: 200;
     overflow: hidden;
-    visibility: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -23,6 +25,7 @@ body, html {
     animation-duration: 3s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    backface-visibility: visible !important;
 }
 
 .aragorn-topname, .aragorn-midname {
@@ -42,6 +45,5 @@ body, html {
 }
 
 .aragorn-main-section {
-    height: calc(100% - 60px);
     padding-top: 60px;
 }

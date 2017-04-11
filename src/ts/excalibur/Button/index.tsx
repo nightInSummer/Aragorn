@@ -11,7 +11,7 @@ import './styles.less'
 
 interface Sinks {
   DOM: Stream<JSX.Element>,
-  ACTIONS: Actions
+  presses: Stream<Symbol>
 }
 interface Actions {
   mousedown$: Stream<Symbol>,
@@ -61,12 +61,12 @@ const reducers = (actions: Actions) => {
   )
   const leaveReducer$ = actions.mouseleave$.map(
     () => (state: Map<string, any>): Map<string, any> => {
-      return state.set('style',  Map({
+      return state.update('style', (x: Map<string, string>) => x.merge(Map({
                     '--ty': '0px',
                     '--tz': '-12px',
                     '--rx': '0px',
                     '--ry': '0px'
-                  }))
+                  })))
     }
   )
   return xs.merge(bendReducer$, clickReducer$, upReducer$, leaveReducer$)
@@ -76,12 +76,12 @@ const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>
   const state$ = props
     .map(
           (props : Props) =>
-            props.set('style', Map({
+            props.update('style', (x: Map<string, string>) => x.merge(Map({
                     '--ty': '0px',
                     '--tz': '-12px',
                     '--rx': '0px',
                     '--ry': '0px'
-                  }))
+                  })))
     )
     .map(state => reducer$.fold((acc, reducer) => reducer(acc), state))
     .flatten()
@@ -99,7 +99,7 @@ const main: DOMComponent = (sources: Sources ) : Sinks => {
 
   const sinks: Sinks = {
     DOM: vnode$,
-    ACTIONS: actions$
+    presses: actions$.mousedown$
   }
 
   return sinks
