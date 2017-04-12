@@ -56,4 +56,4 @@ build
 #yarn
 yarn-error.log
 yarn.lock
-deploy-config.js
+./deploy-config.js
