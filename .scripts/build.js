@@ -28,7 +28,7 @@ const getEntry = (globPath, pathDir) => {
 const host = 'http://localhost'
 const port = 8000
 // >>>> config
-const entries = getEntry('src/ts/page/**/index.*', 'src/ts/page/')
+const entries = getEntry('src/ts/page/*/index.*', 'src/ts/page/')
 const chunks = Object.keys(entries)
 const config = {
   entry: entries,
@@ -88,14 +88,6 @@ const config = {
         minChunks: chunks.length
     }),
     new ExtractTextPlugin('styles/[name].css'),
-    debug
-    ? function() {}
-    : new UglifyJsPlugin({
-        compress: {
-            warnings: false
-        },
-        except: ['exports', 'require']
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.SourceMapDevToolPlugin(
       {

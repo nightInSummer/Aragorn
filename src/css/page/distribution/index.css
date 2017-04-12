@@ -205,7 +205,7 @@
   animation-fill-mode: forwards;
 }
 
-.aragorn-toolbar {
+.aragorn-toolbar, .aragorn-menu-wrapper {
   margin-top: 5%;
   width: 100%;
   position: absolute;

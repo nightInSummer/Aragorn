@@ -1,7 +1,7 @@
 import { DOMComponent, Sources, Props } from '../types'
 import xs, { Stream } from 'xstream'
 import isolate from '@cycle/isolate'
-import { makeDOMDriver, DOMSource } from '@cycle/dom'
+import { DOMSource } from '@cycle/dom'
 import { VNode } from 'snabbdom/vnode'
 import './styles.less'
 

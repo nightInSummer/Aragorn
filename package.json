@@ -47,6 +47,7 @@
   },
   "scripts": {
     "start": "node .scripts/server.js",
-    "dll": "webpack --progress --colors --config .scripts/dll.js"
+    "dll": "webpack --progress --colors --config .scripts/dll.js",
+    "build": "rm -rf .public && webpack --config .scripts/build.js -p"
   }
 }
