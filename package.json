@@ -41,12 +41,14 @@
     "@types/immutable": "^3.8.7",
     "@types/node": "^7.0.5",
     "@types/react": "^15.0.14",
+    "prompt": "^1.0.0",
     "rxjs": "^5.2.0",
     "typescript": "^2.1.6",
     "xstream": "^10.2.0"
   },
   "scripts": {
     "start": "node .scripts/server.js",
-    "dll": "webpack --progress --colors --config .scripts/dll.js"
+    "dll": "webpack --progress --colors --config .scripts/dll.js",
+    "push": "node .scripts/Eden-release.js"
   }
 }
