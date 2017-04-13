@@ -1,6 +1,6 @@
-@import '../../../../../node_modules/bulma/css/bulma.css';
-@import "../../common/common.css";
 @import "../../common/animate.css";
+@import '../../../../node_modules/bulma/css/bulma.css';
+@import "../../common/common.css";
 @import "../../lib/iconfont.css";
 
 .aragorn-menu-button {

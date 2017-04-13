@@ -57,3 +57,6 @@ build
 yarn-error.log
 yarn.lock
 deploy-config.js
+
+#prod
+public

@@ -5,7 +5,7 @@ var config = require('./build');
 
 const host = 'http://localhost'
 const port = 8000
-const target = process.argv[3]
+const target = process.argv[2]
 
 const hostMap = {
   xuncheng: 'http://gzns-waimai-dcloud30.gzns.iwm.name:8155'

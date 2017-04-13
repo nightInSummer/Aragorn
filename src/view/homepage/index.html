@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="src/static/dll.js"></script>
-    <script src="src/static/fss.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="src/css/page/index.css" />
-    <title>wlwine</title>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <% if (!htmlWebpackPlugin.options.faviconpath && htmlWebpackPlugin.files.favicon) { %>
+      <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
+    <% } %>
+    <% if (htmlWebpackPlugin.options.faviconpath) { %>
+      <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.faviconpath%>">
+    <% } %>
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+      <link href="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.css[css]).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>" rel="stylesheet">
+    <% } %>
   </head>
   <body>
-    <div class="aragorn-topname">
-      <div id="aragorn-topname">
-        寻 宝
-      </div>
-    </div>
     <div class="aragorn-midname">
       <div class="overflow">
         <div id="title" class="fadeIn" style="display: none;">
@@ -48,6 +49,12 @@
       </div>
       <div class="aragorn-background-controls" id="aragorn-background-controls" style="display: none;">
       </div>
-    <script type="text/javascript" defer="defer" src="src/static/background/back_homepage.js"></script>
+    </div>
+    <% for (var path in htmlWebpackPlugin.options.staticpaths) { %>
+      <script src="<%= htmlWebpackPlugin.options.staticpaths[path] %>"></script>
+    <% } %>
+    <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
+      <script src="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.chunks[chunk].entry).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>"></script>
+    <% } %>
   </body>
 </html>

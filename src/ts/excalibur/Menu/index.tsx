@@ -8,6 +8,7 @@ import './styles.less'
 
 interface Sinks {
   DOM: Stream<JSX.Element>,
+  props: Stream<Map<string,any> | Props>
 }
 interface Actions {
   open$: Stream<string>,
@@ -22,34 +23,43 @@ const intent = (dom: DOMSource) : Actions => ({
 })
 
 const reducers = (actions: Actions) => {
+  console.log('hahaha');
   return xs.merge(
     actions.open$.map(
-      () => (state: Map<string, any>): Map<string, any> => {
-        return state.update('openKeys', x => x.push())
+      (value) => (state: Map<string, any>): Map<string, any> => {
+        return state.update('openKeys', x => x.includes(value) ? x.delete(x.indexOf(value)) : x.push(value))
+      }
+    ),
+    actions.select$.map(
+      (value) => (state: Map<string, any>): Map<string, any> => {
+        return state.set('selected', value)
       }
     )
   )
 }
 
-const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>> => {
-
+const model = (props: Stream<Map<string, any> | Props>, actions: Actions) : Stream<Map<string, any> | Props> => {
+  const reducer$ = reducers(actions)
+  const state$ = props
+    .map(state => reducer$.fold((acc: Map<string, any>, reducer) => reducer(acc), state))
+    .flatten()
+    .remember()
+  return state$
 }
 
-const main: DOMComponent = (sources: Sources) : Sinks => {
-  const vnode$ = sources.props.map(
-    (props: Props) =>
-      <div className="excalibur-menu-wrapper">
-        {props.get('data').map(
+const view = (state$: Stream<Map<string, any> | Props>) => state$.map(
+  (state: Map<string, any>) => <div className="excalibur-menu-wrapper">
+        {state.get('data').map(
           (item: Map<string, any>) => (
             <div>
-              <label id={item.get('key')}>
+              <label id={item.get('key')} className={state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}>
                 <i className={`icon-${item.get('icon')} iconfont`} />
                 <span>{item.get('text')}</span>
-                {item.get('children') && <div className="excalibur-menu-arrow" />}
-                <div className="excalibur-menu-bar" />
-                {item.get('children') && <div className="excalibur-menu-content">
+                {item.get('children') && <div className={`excalibur-menu-arrow ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`} />}
+                <div className={`excalibur-menu-bar ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`} />
+                {item.get('children') && <div className={`excalibur-menu-content ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`}>
                   <ul>{item.get('children').map(
-                      (child: Map<string, any>) => <li>{child.get('text')}</li>
+                      (child: Map<string, any>) => <li className={state.get('selected') === item.get('key') ? 'selected' : ''}>{child.get('text')}</li>
                     )}</ul>
                 </div>}
               </label>
@@ -57,9 +67,15 @@ const main: DOMComponent = (sources: Sources) : Sinks => {
           )
         ).toJS()}
       </div>
-  ) 
+)
+
+const main: DOMComponent = (sources: Sources) : Sinks => {
+  const actions$ = intent(sources.DOM)
+  const states$ = model(sources.props, actions$)
+  const vnode$ = view(states$)
   return {
-    DOM: vnode$
+    DOM: vnode$,
+    props: states$
   }
 }
 

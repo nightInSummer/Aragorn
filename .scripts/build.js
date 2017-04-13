@@ -6,7 +6,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CheckerPlugin } = require('awesome-typescript-loader')
-const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV == 'development';
 // >>>> utils
 const getEntry = (globPath, pathDir) => {
     let files = glob.sync(globPath);
@@ -17,9 +17,11 @@ const getEntry = (globPath, pathDir) => {
         dirname = path.dirname(entry);
         extname = path.extname(entry);
         basename = path.basename(entry, extname);
-        pathname = path.join(dirname, basename);
+        dirname = pathDir ? dirname.replace(new RegExp('^' + pathDir), '') : dirname;
+        pathname = path.join(dirname, basename);   
         pathname = pathname.replace(/\\/g, '/');
-        pathname = pathDir ? pathname.replace(new RegExp('^' + pathDir), '') : pathname;
+        if (!debug)
+          pathname = pathname.replace('/index', '');
         entries[pathname] = ['./' + entry];
     }
     return entries;
@@ -49,16 +51,12 @@ const config = {
         include: path.join(__dirname, '../src/ts')        
       }, {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract([ 'style-loader', 'css-loader' ]),
+        loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' }),
         include: path.join(__dirname, '../src')
       }, {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract([ 'css-loader', 'less-loader' ]),
         include: path.join(__dirname, '../src')
-      }, {
-        test: /\.html$/,
-        loader: "html-loader?-minimize",
-        include: path.join(__dirname, '../src/view')
       }, {
         test: /\.(woff|woff2|ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader?name=fonts/[name].[ext]',
@@ -80,41 +78,57 @@ const config = {
       manifest: require('../manifest.json'),
       name: 'dll'
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendors',
-        chunks: chunks,
-        async: true,
-        children: true,
-        minChunks: chunks.length
-    }),
     new ExtractTextPlugin('styles/[name].css'),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.SourceMapDevToolPlugin(
+    !debug ? new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      },
+      exclude: /static/
+    }) : function() {},
+    debug ? new webpack.HotModuleReplacementPlugin() : function() {},
+    debug ? new webpack.SourceMapDevToolPlugin(
       {
         include: chunks.map(name => 'scripts/' + name + '.js'),
         exclude: 'vendors',
         columns: false,
         module: true
       }
-    ),
+    ) : function() {},
     new ProgressBarPlugin()
   ]
 }
+
 // >>>> html
-const pages = Object.keys(getEntry('src/view/**/*.html', 'src/view/'));
+const pages = Object.keys(getEntry('src/view/*/*.html', 'src/view/'));
 pages.forEach(function(pathname) {
-    let conf = {
-        filename: pathname + '.html',
-        template: 'src/view/' + pathname + '.html',
-        inject: false
+    var conf = {
+        filename: debug ? pathname + '.html' : 'views/' + pathname + '.html',
+        template: 'src/view/' + pathname + (debug ? '.html' : '/index.html'),
+        inject: false,
+        debug
     };
     if (pathname in config.entry) {
-        conf.favicon = 'src/img/favicon.ico';
-        conf.inject = 'body';
-        conf.chunks = ['vendors', pathname];
+        conf.chunks = [pathname];
         conf.hash = true;
+    }
+    try {
+      var current = debug ? 'dev' : 'prod';
+      conf = Object.assign(conf, require(path.join('../src/view/', debug ? pathname.replace('/index', '') : pathname, '/config.json'))[current])
+    } catch (error) {
+      console.log(`Cant find config.json in ${pathname}, did you forget it?`);
     }
     config.plugins.push(new HtmlWebpackPlugin(conf));
 });
+var conf = {
+    filename: debug ? 'index.html' : 'views/index.html',
+    template: 'src/view/homepage/index.html',
+    inject: false,
+    debug,
+    hash: true,
+    chunks: [debug ? 'homepage/index' : 'homepage']
+};
+var current = debug ? 'dev' : 'prod';
+conf = Object.assign(conf, require('../src/view/homepage/config')[current]);
+config.plugins.push(new HtmlWebpackPlugin(conf));
 
 module.exports = config;

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "title": "wlwimeTest HomePage",
+    "favicon": "src/img/favicon.ico",
+    "staticpaths": ["src/static/dll.js", "src/static/particle.min.js", "src/static/background/back_distribution.js"],
+    "public": ""
+  },
+  "prod": {
+    "title": "wlwime",
+    "favicon": "src/img/favicon.ico",
+    "faviconpath": "images/favicon.ico",
+    "staticpaths": ["scripts/dll.js", "scripts/particle.min.js", "scripts/back_distribution.js"],
+    "public": "/aragorn"
+  }
+}
