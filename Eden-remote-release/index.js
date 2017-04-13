@@ -80,9 +80,7 @@ module.exports = function(options, modified, callback) {
         return function() {
             current(next);
         };
-    }, function() {
-        console.log('xietian')
-    })();
+    }, callback)();
 };
 
 module.exports.options = {
