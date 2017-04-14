@@ -5,7 +5,6 @@ import { VNode } from 'snabbdom/vnode'
 import { Map } from 'immutable'
 import { DOMSource } from '@cycle/dom'
 import './styles.less'
-
 interface Sinks {
   DOM: Stream<JSX.Element>,
   props: Stream<Map<string,any> | Props>
@@ -19,15 +18,17 @@ interface ClickEventTarget extends EventTarget {
 }
 const intent = (dom: DOMSource) : Actions => ({
   open$: dom.select('.excalibur-menu-wrapper label').events('click').map(e => (e.target as ClickEventTarget).id),
-  select$: dom.select('.exexcalibur-menu-wrapper li').events('click').map(e => (e.target as ClickEventTarget).id)
+  select$: dom.select('.excalibur-menu-wrapper li').events('click').map(e => (e.target as ClickEventTarget).id)
 })
 
 const reducers = (actions: Actions) => {
-  console.log('hahaha');
   return xs.merge(
     actions.open$.map(
       (value) => (state: Map<string, any>): Map<string, any> => {
-        return state.update('openKeys', x => x.includes(value) ? x.delete(x.indexOf(value)) : x.push(value))
+        const find = state.get('data').find((x: Map<string, any>) => x && x.get('key') == value)
+        if(!find || !find.get('children'))
+          return state.set('selected', value)
+        return state.update('openKeys', x => x.includes(value) ? x.delete(x.indexOf(value)) : x.push(value));
       }
     ),
     actions.select$.map(
@@ -55,13 +56,13 @@ const view = (state$: Stream<Map<string, any> | Props>) => state$.map(
               <label id={item.get('key')} className={state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}>
                 <i className={`icon-${item.get('icon')} iconfont`} />
                 <span>{item.get('text')}</span>
-                {item.get('children') && <div className={`excalibur-menu-arrow ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`} />}
+                {item.get('children') ? <div className={`excalibur-menu-arrow ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`} /> : ''}
                 <div className={`excalibur-menu-bar ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`} />
-                {item.get('children') && <div className={`excalibur-menu-content ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`}>
+                {item.get('children') ? <div className={`excalibur-menu-content ${state.get('openKeys').includes(item.get('key')) ? 'selected' : ''}`}>
                   <ul>{item.get('children').map(
                       (child: Map<string, any>) => <li className={state.get('selected') === item.get('key') ? 'selected' : ''}>{child.get('text')}</li>
                     )}</ul>
-                </div>}
+                </div> : ''}
               </label>
             </div>
           )

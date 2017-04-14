@@ -56,5 +56,8 @@
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
       <script src="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.chunks[chunk].entry).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>"></script>
     <% } %>
+    <script>
+      window._INITDATA_ = {%json_encode($data)%}
+    </script>
   </body>
 </html>

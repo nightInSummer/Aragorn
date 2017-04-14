@@ -10,14 +10,10 @@ var Eden_release = require('../Eden-remote-release');
 var Q = require('q')
 
 var hostName = process.argv[2];     //捕获机器名字
-//
-//glob(".scripts/*.js", function (er, files) {
-//    push(deploy_cfg[hostName], '/webroot', files);
-//});
 
 push_config("public/scripts/*.*", '/webroot/aragorn/scripts').then(
     push_config("public/styles/*.*", '/webroot/aragorn/styles').then(
-        push_config("public/views/*.*", '/webroot/aragorn').then(
+        push_config("public/views/*.*", '/template/aragorn').then(
             push_config("src/img/*.*", '/webroot/aragorn/images').then(
                 push_config("src/static/**/*.*", '/webroot/aragorn/scripts')
             )

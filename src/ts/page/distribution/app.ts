@@ -22,12 +22,14 @@ export default function app(sources: Sources) {
   )
   const menu = Menu(
     {
-      DOM: sources.DOM
+      DOM: sources.DOM,
+      History: sources.History
     }
   )
 
   return {
     DOM: xs.combine(search.DOM, table.DOM, menu.DOM).map(vtree => div(vtree)),
-    HTTP: search.HTTP
+    HTTP: search.HTTP,
+    History: menu.History
   }
 }
