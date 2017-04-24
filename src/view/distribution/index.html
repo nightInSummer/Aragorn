@@ -9,7 +9,7 @@
     <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
   <% } %>
   <% if (htmlWebpackPlugin.options.faviconpath) { %>
-    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.faviconpath%>">
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.public + htmlWebpackPlugin.options.faviconpath%>">
   <% } %>
   <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.css[css]).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>" rel="stylesheet">
@@ -32,14 +32,21 @@
   </div>
   <div class="cycle-container">
   </div>
+  <script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=D945ef158d49611a2c801630bf3ef7a8&s=1"></script>
   <% for (var path in htmlWebpackPlugin.options.staticpaths) { %>
-    <script src="<%= htmlWebpackPlugin.options.staticpaths[path] %>"></script>
+    <script src="<%= htmlWebpackPlugin.options.public + htmlWebpackPlugin.options.staticpaths[path] %>"></script>
+  <% } %>
+  <% if (htmlWebpackPlugin.options.mock) { %>
+    <script>
+      window._INITDATA_ = "<%= htmlWebpackPlugin.options.mock %>"
+    </script>
+  <% } else {%>
+  <script>
+      window._INITDATA_ = {%json_encode($data)%}
+    </script>
   <% } %>
   <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.chunks[chunk].entry).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>"></script>
   <% } %>
-  <script>
-      window._INITDATA_ = {%json_encode($data)%}
-    </script>
 </body>
 </html>

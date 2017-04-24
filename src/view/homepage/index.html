@@ -9,7 +9,7 @@
       <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
     <% } %>
     <% if (htmlWebpackPlugin.options.faviconpath) { %>
-      <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.faviconpath%>">
+      <link rel="shortcut icon" href="<%= htmlWebpackPlugin.options.public + htmlWebpackPlugin.options.faviconpath%>">
     <% } %>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
       <link href="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.css[css]).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>" rel="stylesheet">
@@ -51,7 +51,7 @@
       </div>
     </div>
     <% for (var path in htmlWebpackPlugin.options.staticpaths) { %>
-      <script src="<%= htmlWebpackPlugin.options.staticpaths[path] %>"></script>
+      <script src="<%= htmlWebpackPlugin.options.public + htmlWebpackPlugin.options.staticpaths[path] %>"></script>
     <% } %>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
       <script src="<%= (htmlWebpackPlugin.options.public + htmlWebpackPlugin.files.chunks[chunk].entry).replace('/index', htmlWebpackPlugin.options.debug ? '/index' : '') %>"></script>

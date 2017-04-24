@@ -11,11 +11,11 @@ var Q = require('q')
 
 var hostName = process.argv[2];     //捕获机器名字
 
-push_config("public/scripts/*.*", '/webroot/aragorn/scripts').then(
-    push_config("public/styles/*.*", '/webroot/aragorn/styles').then(
+push_config("public/scripts/*.*", '/webroot/static/wlmine/aragorn/scripts').then(
+    push_config("public/styles/*.*", '/webroot/static/wlmine/aragorn/styles').then(
         push_config("public/views/*.*", '/template/aragorn').then(
-            push_config("src/img/*.*", '/webroot/aragorn/images').then(
-                push_config("src/static/**/*.*", '/webroot/aragorn/scripts')
+            push_config("src/img/*.*", '/webroot/static/wlmine/aragorn/images').then(
+                push_config("src/static/**/*.*", '/webroot/static/wlmine/aragorn/scripts')
             )
         )
     )

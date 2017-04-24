@@ -1,6 +1,6 @@
 import xs, { Stream } from 'xstream'
 import { fromJS, List } from 'immutable'
-import { DOMSource, div } from '@cycle/dom'
+import { DOMSource, div, button } from '@cycle/dom'
 import { Sources } from '../../../excalibur/types'
 import { VNode } from 'snabbdom/vnode'
 import Table from '../../../excalibur/Table'
@@ -10,13 +10,18 @@ interface Actions {
 
 const intent = (source: Sources): Actions => {
   return {
-    searchComplete$: source.HTTP.select('getshopregionanalysis').flatten().map(res => JSON.parse(res.text)).debug('lanyesabi')
+    searchComplete$: source.HTTP.select('getshopregionanalysis').flatten().map(res => JSON.parse(res.text))
   }
 }
 
 const reducers = (actions: Actions) => xs.merge(
   actions.searchComplete$.map(
-    (value) => (state: Map<string, any>) => state.set('data', value ? fromJS(value.data) : List())
+    (value) => (state: Map<string, any>) => {
+      return state.set('data', value ? fromJS(value.data.list.map((item: any) => ({...item, action: button(
+        '.button',
+          {attrs: {title: encodeURIComponent(JSON.stringify(item))}}, '查看详情')
+        }))) : List())
+    }
   )
 )
 
@@ -68,6 +73,9 @@ const props$ = xs.of(fromJS({
   }, {
     text: <span>饿了么配送范围面积（抓取）/km<sup>2</sup></span>,
     key: 'eleme_delivery_region_grab'
+  }, {
+    text: '操作',
+    key: 'action'
   }]
 }))
 
@@ -76,6 +84,18 @@ export default function app(source: Sources) {
   const state$ = model(props$, actions)
   const vtree$ = view(state$, source)
   return {
-    DOM: vtree$
+    DOM: vtree$,
+    Router: source.DOM.select('.aragorn-main-section').events('click').filter((x: Event)=> (x.target as HTMLButtonElement).tagName === 'BUTTON').mapTo('/detail'),
+    HTTP: source.DOM.select('.aragorn-main-section').events('click').filter((x: Event)=> (x.target as HTMLButtonElement).tagName === 'BUTTON').map((ev) =>  (ev.target as HTMLInputElement).title).map(
+      params => ({
+        url: '/wlmine/getshopregionanalysisdetail',
+        category: 'getshopregionanalysisdetail',
+        method: 'GET',
+        query: {
+          shop_id: JSON.parse(decodeURIComponent(params)).shop_id
+        },
+        withCredentials: true
+      })
+    )
   }
 }

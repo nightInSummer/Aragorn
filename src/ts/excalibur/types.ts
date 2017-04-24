@@ -19,7 +19,9 @@ export interface Sources {
   DOM: DOMSource,
   props?: Stream<Object | Map<string, any>>,
   HTTP?: HTTPSource,
-  History?: any
+  History?: any,
+  Router?: any,
+  MAP?: any
 }
 
 export interface Props {

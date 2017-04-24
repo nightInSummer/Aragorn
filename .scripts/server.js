@@ -31,12 +31,13 @@ const server = new WebpackDevServer(compiler, {
       color: true,
       chunks: false
   },
-  proxy: {
-      '/wlmine/*': {
+  proxy: [
+      {
+        context: ['/wlmine/**', '/logistics/**'],
         target: hostMap[target] || 'http://gzns-waimai-dcloud30.gzns.iwm.name:8155',
         changeOrigin: true,
         secure: false
       }
-  }
+  ]
 })
 server.listen(port)

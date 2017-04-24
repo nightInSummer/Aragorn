@@ -7,7 +7,7 @@ import './styles.less'
 import {Map, fromJS} from 'immutable'
 interface Sinks {
   DOM: Stream<JSX.Element>,
-  VALUE: Stream<Object>
+  props: Stream<Map<string, string>>
 }
 interface Actions {
   select$: Stream<Map<string, string>>,
@@ -48,6 +48,7 @@ const model = (props: Stream<Props>, actions: Actions) : Stream<Map<string, any>
     )
     .map(state => reducer$.fold((acc, reducer) => reducer(acc), state))
     .flatten()
+    .remember()
   return state$
 }
 
@@ -64,7 +65,7 @@ const view = (state$: Stream<Map<string, any>>) => state$.map(
           <input className="input" style={{color: '#FFF'}} value={state.get('search')} placeholder='Search'/>
         </span>
         <ul style={{zIndex: 3}}>
-          {state.get('data').map((x: Map<string, string>) => <li title={x.get('value')} className={`option ${state.get('multiple') ? state.getIn(['value', 'value']).includes(x.get('value')) : state.getIn(['value', 'value']) === x.get('value') ? 'selected' : ''} ${x.get('text').includes(state.get('search')) ? 'excalibur-animate-fadein' : 'excalibur-animate-fadeout'}`}>{x.get('text')}</li>).toJS()}
+          {state.get('data').map((x: Map<string, string>) => <li title={x.get('value')} className={`option ${state.get('multiple') && state.getIn(['value', 'value']).includes(x.get('value')) ? 'selected' : state.getIn(['value', 'value']) === x.get('value') ? 'selected' : ''} ${x.get('text').includes(state.get('search')) ? 'excalibur-animate-fadein' : 'excalibur-animate-fadeout'}`}>{x.get('text')}</li>).toJS()}
         </ul>
       </li>
     </ul>
@@ -77,7 +78,7 @@ const main: DOMComponent = (sources: Sources) : Sinks => {
 
   const sinks: Sinks = {
     DOM: vnode$,
-    VALUE: states$.map(state => state.get('value'))
+    props: states$
   }
   return sinks
 }

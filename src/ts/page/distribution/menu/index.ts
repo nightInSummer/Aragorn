@@ -25,22 +25,30 @@ const props$ = xs.of(fromJS({
 const view = (vtree$: Stream<VNode>) => vtree$.map((vtree) => div('.aragorn-menu-wrapper', {style: {visibility: 'hidden'}}, [vtree]))
 
 export default function menu(source: Sources) {
+  const debug = location.hostname === 'localhost' || location.hostname === '127.0.0.1'
   const state$ = source.History
-    .compose(dropRepeats((x: any, y: any) => x.pathname === y.pathname))
-    .map((location: any) => props$.map( props => props.set('selected', location.pathname.replace('/', ''))))
+    .compose(dropRepeats((x: any, y: any) => {return debug ? x.pathname === y.pathname : x.search === y.search}))
+    .map((location: any) => props$.map( props => props.set('selected', debug ? location.pathname.replace('/', '') : location.search.replace('?tpl=', ''))))
     .flatten()
     .remember()
   const menu = Menu({DOM: source.DOM, props: state$})
   const vtree$ = view(menu.DOM as Stream<VNode>)
   const History = menu.props
     .map(
-      (state: Map<string, any>) => '/' + state.get('selected')
+      (state: Map<string, any>) => state.get('selected')
     )
-    .filter((x: string) => x !== '/distribution')
-    .map((value: string) => ({
+    .filter((x: string) => x !== 'distribution')
+    .map((value: string) => {
+    return debug
+    ? {
       type: 'push',
-      pathname: value
-    }))
+      pathname: '/' + value
+    }
+    : {
+      type: 'push',
+      pathname: location.pathname + '?tpl=' + value
+    }
+  })
   return {
     DOM: vtree$,
     History

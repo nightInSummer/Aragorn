@@ -8,8 +8,8 @@
   "prod": {
     "title": "wlwime",
     "favicon": "src/img/favicon.ico",
-    "faviconpath": "images/favicon.ico",
-    "staticpaths": ["scripts/dll.js", "scripts/fss.min.js", "scripts/back_homepage.js"],
-    "public": "/aragorn"
+    "faviconpath": "/images/favicon.ico",
+    "staticpaths": ["/scripts/dll.js", "/scripts/fss.min.js", "/scripts/back_homepage.js"],
+    "public": "/static/wlmine/aragorn"
   }
 }
